@@ -554,8 +554,4 @@ The commit message should read: <br>
 <hr>
 
 
-## Submission Guidelines
-&#10004; Submit your project via [this google form](https://docs.google.com/forms/d/e/1FAIpQLSezWVG8OLr6ZxmRNOwZ6xsoYO5lu_7L1LTWA3X6iclG4iG_Hw/viewform).
-
-
 <hr>
