@@ -46,6 +46,17 @@ class TweetsController < ApplicationController
         end
     end
 
+    def destroy
+        begin 
+            Tweet.destroy(params[:id])
+            render(status: 204)               
+        rescue ActiveRecord::RecordNotFound 
+            render(status: 404, json: {error: "Tweet not found with id: #{params[:id]}"})
+        rescue  => error
+            render(status: 500, json: {error: "Internal Server Error: #{error.message}"})
+        end
+    end
+
     private 
 
     def tweet_params # strong params for create / update
