@@ -10,7 +10,9 @@ class TweetsController < ApplicationController
 
     def show 
         begin
-            render(status: 200, json: {tweet: Tweet.find(params[:id])})
+            # render(status: 200, json: {tweet: Tweet.find(params[:id])})
+            found_tweet = Tweet.find(params[:id])
+            render(status: 200, json: {tweet: found_tweet, replies: found_tweet.replies})
         rescue ActiveRecord::RecordNotFound 
             render(status: 404, json: {error: "Tweet not found with id: #{params[:id]}"})
         rescue  => error
@@ -39,7 +41,8 @@ class TweetsController < ApplicationController
             found_tweet = Tweet.find(params[:id])
             # https://stackoverflow.com/questions/50796964/updating-database-records-in-rails
             begin
-                found_tweet.update!(tweet_params)
+                # Raises an error when validation fails, say Title has already been taken
+                found_tweet.update!(tweet_params) 
                 render(status: 200, json: {tweet: found_tweet}) 
             rescue => err # If validation fails, like duplicate title
                 render(status: 400, json: {error: err.message}) 

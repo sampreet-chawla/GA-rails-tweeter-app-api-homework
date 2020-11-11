@@ -3,4 +3,6 @@ class Tweet < ApplicationRecord
     validates :title, :content, :author, presence: true
     validates :title, uniqueness: true # By default: { case_sensitive: true }
     # validates :title, uniqueness: { case_sensitive: false }
-end
+    # Added below line for One-to-many relationship
+    has_many :replies
+end 

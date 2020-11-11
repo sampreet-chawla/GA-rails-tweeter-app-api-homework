@@ -1,9 +1,12 @@
 class RepliesController < ApplicationController
   before_action :set_reply, only: [:show, :update, :destroy]
 
+  # Updates the index and create methods to support one - to - many  relationship 
   # GET /replies
   def index
-    @replies = Reply.all
+    # @replies = Reply.all
+    # Added where() for one - to - many  relationship 
+    @replies = Reply.where(tweet_id: params[:tweet_id])
 
     render json: @replies
   end
@@ -16,7 +19,8 @@ class RepliesController < ApplicationController
   # POST /replies
   def create
     @reply = Reply.new(reply_params)
-
+    # Added for one - to - many  relationship 
+    @reply.tweet_id = params[:tweet_id]
     if @reply.save
       render json: @reply, status: :created, location: @reply
     else
