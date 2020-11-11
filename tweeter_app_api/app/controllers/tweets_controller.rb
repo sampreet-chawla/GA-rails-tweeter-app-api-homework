@@ -37,8 +37,13 @@ class TweetsController < ApplicationController
     def update
         begin 
             found_tweet = Tweet.find(params[:id])
-            found_tweet.update(tweet_params)
-            render(status: 200, json: {tweet: found_tweet})               
+            # https://stackoverflow.com/questions/50796964/updating-database-records-in-rails
+            begin
+                found_tweet.update!(tweet_params)
+                render(status: 200, json: {tweet: found_tweet}) 
+            rescue => err # If validation fails, like duplicate title
+                render(status: 400, json: {error: err.message}) 
+            end                         
         rescue ActiveRecord::RecordNotFound 
             render(status: 404, json: {error: "Tweet not found with id: #{params[:id]}"})
         rescue  => error
