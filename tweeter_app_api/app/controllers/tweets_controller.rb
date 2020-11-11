@@ -5,8 +5,7 @@ class TweetsController < ApplicationController
             render(status: 200, json: {tweets: Tweet.all})
         rescue => error
             render(status: 500, json: {error: "Internal Server Error: #{error.message}"})
-        end
-        
+        end        
     end
 
     def show 
@@ -17,5 +16,6 @@ class TweetsController < ApplicationController
         rescue  => error
             render(status: 500, json: {error: "Internal Server Error: #{error.message}"})
         end
+        
     end
 end
